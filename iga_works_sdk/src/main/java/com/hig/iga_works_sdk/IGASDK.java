@@ -126,7 +126,7 @@ public class IGASDK {
             evt.put("event", eventName);
 
             Double lat = (Double) map.getOrDefault("lat",Double.MIN_VALUE);
-            Double lng = (Double) map.getOrDefault("lat",Double.MIN_VALUE);
+            Double lng = (Double) map.getOrDefault("lng",Double.MIN_VALUE);
             // if lat or lng is Double.MIN_VALUE, then location is null
             if (lat != null && lat != Double.MIN_VALUE && lng != null && lng != Double.MIN_VALUE) {
                 JSONObject locationJsonObject = new JSONObject();
