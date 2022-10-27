@@ -2,7 +2,6 @@ package com.hig.iga_works_sdk;
 
 import android.app.Application;
 import android.location.Location;
-import android.location.LocationManager;
 import android.util.Log;
 import com.hig.iga_works_sdk.util.CustomLocationManager;
 import java.util.HashMap;
