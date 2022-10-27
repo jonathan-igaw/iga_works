@@ -1,18 +1,8 @@
 package com.hig.iga_works_sdk;
 
-import static android.content.Context.TELEPHONY_SERVICE;
-import android.content.Context;
-import android.content.res.Configuration;
 import android.location.Location;
-import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkInfo;
 import android.os.Build;
-import android.telephony.TelephonyManager;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
-import android.view.WindowManager;
 import com.hig.iga_works_sdk.dto.UserInfo;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,7 +22,6 @@ public class IGASDK {
     private static final String TAG = "IGASDK";
     private static final String DOMAIN = "http://adbrix-sdk-assignment-backend-115895936.ap-northeast-1.elb.amazonaws.com";
     private static String APP_KEY = "inqbator@naver.com";
-    private static Context applicationContext;
     private static final UserInfo userInfo = new UserInfo();
     private static IGASDKApplication igasdkApplication;
 
@@ -59,11 +48,6 @@ public class IGASDK {
 
         Integer gold = (Integer) keyValue.getOrDefault("gold", 0);
         if (gold != null) userInfo.setGold(gold);
-    }
-
-    public static void setApplicationContext(Context context) {
-        Log.d(TAG, "setApplicationContext: context = "+context);
-        applicationContext = context;
     }
 
     private static JSONObject getAddEventJsonBody(String eventName, Map<String, Object> map) {
@@ -262,51 +246,26 @@ public class IGASDK {
     }
 
     private static int[] getResolution() {
-        Log.d(TAG, "getResolution: applicationContext : "+applicationContext);
-        WindowManager wm = (WindowManager) applicationContext.getSystemService(
-                Context.WINDOW_SERVICE
-        );
-        Display display = wm.getDefaultDisplay();
-        DisplayMetrics metrics = new DisplayMetrics();
-        display.getMetrics(metrics);
-        int width = metrics.widthPixels;
-        int height = metrics.heightPixels;
-
-        return new int[] {width, height};
+        Log.d(TAG, "getResolution: ");
+        return igasdkApplication.getResolution();
     }
 
     private static boolean isPortrait() {
-        return applicationContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+        Log.d(TAG, "isPortrait: ");
+        return igasdkApplication.isPortrait();
     }
 
     private static String getNetworkStatus() {
-        ConnectivityManager connMgr = (ConnectivityManager) applicationContext.getSystemService(
-                Context.CONNECTIVITY_SERVICE
-        );
-        for (Network network : connMgr.getAllNetworks()) {
-            NetworkInfo networkInfo = connMgr.getNetworkInfo(network);
-            if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI && networkInfo.isConnected()) {
-                return "wifi";
-            }
-            if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE && networkInfo.isConnected()) {
-                return "mobile";
-            }
-        }
-
-        return null;
+        Log.d(TAG, "getNetworkStatus: ");
+        return igasdkApplication.getNetworkStatus();
     }
 
     private static String getNetworkOperatorName() {
-        TelephonyManager tm = (TelephonyManager) applicationContext.getSystemService(
-                TELEPHONY_SERVICE
-        );
-        return tm.getNetworkOperatorName();
+        return igasdkApplication.getNetworkOperatorName();
     }
 
     private static Location getLastLocation() {
         Log.d(TAG, "getLastLocation: ");
-        Location l = igasdkApplication.getLocation();
-        Log.d(TAG, "location : "+l);
-        return l;
+        return igasdkApplication.getLocation();
     }
 }
