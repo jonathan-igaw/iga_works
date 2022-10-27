@@ -2,6 +2,7 @@ package com.hig.iga_works_sdk;
 
 import android.content.Context;
 import android.util.Log;
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import org.junit.Before;
@@ -18,14 +19,18 @@ public class ExampleInstrumentedTest {
     private static final String TAG = "ExampleInstrumentedTest";
     HashMap<String, Object> map;
     Context context;
+    IGASDKApplication igasdkApplication;
 
     @Before
-    public void setContext() {
-        context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+    public void setApplication() {
+        context = InstrumentationRegistry.getInstrumentation().getTargetContext().getApplicationContext();
+        igasdkApplication = ApplicationProvider.getApplicationContext();
+        igasdkApplication.setCustomLocationManager();
+        IGASDK.setIgasdkApplication(igasdkApplication);
     }
 
     @Before
-    public void init() {
+    public void setAddEventMap() {
         Log.d(TAG, "init: ");
 
         map = new HashMap<>();
@@ -58,19 +63,19 @@ public class ExampleInstrumentedTest {
     @Test
     public void addEvent_isCorrect() {
         Log.d(TAG, "addEvent_isCorrect: ");
-        IGASDK.setApplicationContext(context);
+
         assertTrue(IGASDK.addEvent("test_event", map));
     }
 
     @Test
     public void addEventWithNullMap_isCorrect() {
-        IGASDK.setApplicationContext(context);
+        IGASDK.setIgasdkApplication(igasdkApplication);
         assertTrue(IGASDK.addEvent("test_event", null));
     }
 
     @Test
     public void addEventIfLocationIsNull_isCorrect() {
-        IGASDK.setApplicationContext(context);
+        IGASDK.setIgasdkApplication(igasdkApplication);
         map.remove("lat");
         map.remove("lng");
         map.put("appkey", "inqbator@naver.com");

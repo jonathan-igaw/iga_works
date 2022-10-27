@@ -3,6 +3,7 @@ package com.hig.iga_works_sdk;
 import static android.content.Context.TELEPHONY_SERVICE;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
@@ -33,11 +34,16 @@ public class IGASDK {
     private static String APP_KEY = "inqbator@naver.com";
     private static Context applicationContext;
     private static final UserInfo userInfo = new UserInfo();
+    private static IGASDKApplication igasdkApplication;
 
     // SDK를 초기화 합니다. appkey가 필수적으로 필요합니다.
     public static void init(String appkey) {
         Log.d(TAG, "init: appkey = "+appkey);
         APP_KEY = appkey;
+    }
+
+    public static void setIgasdkApplication(IGASDKApplication application) {
+        igasdkApplication = application;
     }
 
     public static void setUserProperty(Map<String, Object> keyValue) {
@@ -125,14 +131,13 @@ public class IGASDK {
             evt.put("created_at", createdAt);
             evt.put("event", eventName);
 
-            Double lat = (Double) map.getOrDefault("lat",Double.MIN_VALUE);
-            Double lng = (Double) map.getOrDefault("lng",Double.MIN_VALUE);
-            // if lat or lng is Double.MIN_VALUE, then location is null
-            if (lat != null && lat != Double.MIN_VALUE && lng != null && lng != Double.MIN_VALUE) {
+            Location currentLocation = getLastLocation();
+            // if : location is not null. add location info to jsonBody.
+            if (currentLocation != null) {
                 JSONObject locationJsonObject = new JSONObject();
-                locationJsonObject.put("lat", lat);
-                locationJsonObject.put("lng", lng);
+                locationJsonObject.put("lat", currentLocation.getLatitude());
                 evt.put("location", locationJsonObject);
+                locationJsonObject.put("lng", currentLocation.getLongitude());
             }
 
             // param
@@ -296,5 +301,12 @@ public class IGASDK {
                 TELEPHONY_SERVICE
         );
         return tm.getNetworkOperatorName();
+    }
+
+    private static Location getLastLocation() {
+        Log.d(TAG, "getLastLocation: ");
+        Location l = igasdkApplication.getLocation();
+        Log.d(TAG, "location : "+l);
+        return l;
     }
 }
