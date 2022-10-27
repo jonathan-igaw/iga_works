@@ -12,12 +12,12 @@ import static org.junit.Assert.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
     private static final String TAG = "ExampleInstrumentedTest";
-    HashMap<String, Object> map;
     Context context;
     IGASDKApplication igasdkApplication;
 
@@ -28,11 +28,17 @@ public class ExampleInstrumentedTest {
         IGASDK.setIgasdkApplication(igasdkApplication);
     }
 
-    @Before
-    public void setAddEventMap() {
-        Log.d(TAG, "init: ");
+    @Test
+    public void useAppContext() {
+        // Context of the app under test.
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        assertEquals("com.hig.iga_works_sdk.test", appContext.getPackageName());
+    }
 
-        map = new HashMap<>();
+    @Test
+    public void addEvent_isCorrect() {
+        Log.d(TAG, "addEvent_isCorrect: ");
+        Map<String, Object> map = new HashMap<>();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         map.put("created_at", sdf.format(new Date(System.currentTimeMillis())));
 
@@ -50,18 +56,6 @@ public class ExampleInstrumentedTest {
 
         // app key
         map.put("appkey", "inqbator@naver.com");
-    }
-
-    @Test
-    public void useAppContext() {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.hig.iga_works_sdk.test", appContext.getPackageName());
-    }
-
-    @Test
-    public void addEvent_isCorrect() {
-        Log.d(TAG, "addEvent_isCorrect: ");
 
         assertTrue(IGASDK.addEvent("test_event", map));
     }
@@ -74,6 +68,20 @@ public class ExampleInstrumentedTest {
 
     @Test
     public void addEventIfLocationIsNull_isCorrect() {
+        Map<String, Object> map = new HashMap<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        map.put("created_at", sdf.format(new Date(System.currentTimeMillis())));
+
+        String menuInputByUser = "open_menu";
+        map.put("event", menuInputByUser);
+
+        String menuName = "menu1";
+        map.put("menu_name", menuName);
+        map.put("menu_id", "30");
+
+        // app key
+        map.put("appkey", "inqbator@naver.com");
+
         IGASDK.setIgasdkApplication(igasdkApplication);
         map.remove("lat");
         map.remove("lng");
