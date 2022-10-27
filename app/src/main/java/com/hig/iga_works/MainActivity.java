@@ -8,8 +8,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 import com.hig.iga_works_sdk.IGAMenuClickListener;
+import com.hig.iga_works_sdk.IGASDK;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -28,6 +33,21 @@ public class MainActivity extends AppCompatActivity {
                 super.onClick(view);
                 Log.d(TAG, "IGA Clicked Listener called: ");
                 Toast.makeText(MainActivity.this.getApplicationContext(), "button is clicked", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        Button buttonOfUserPropertyRegister = findViewById(R.id.button_register_member_info);
+        buttonOfUserPropertyRegister.setOnClickListener(new IGAMenuClickListener(TAG + " - Click Register Button") {
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                Map<String, Object> mapOfUserProperty = new HashMap<>();
+
+                mapOfUserProperty.put("birthyear", Integer.parseInt(((EditText) findViewById(R.id.edittext_birth_year)).getText().toString()));
+                mapOfUserProperty.put("gender", ((EditText) findViewById(R.id.edittext_gender)).getText().toString());
+                mapOfUserProperty.put("level", Integer.parseInt(((EditText) findViewById(R.id.edittext_level)).getText().toString()));
+                mapOfUserProperty.put("gold", Integer.parseInt(((EditText) findViewById(R.id.edittext_gold)).getText().toString()));
+                IGASDK.setUserProperty(mapOfUserProperty);
             }
         });
     }

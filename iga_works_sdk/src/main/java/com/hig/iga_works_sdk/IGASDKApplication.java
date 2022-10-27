@@ -13,8 +13,6 @@ import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 import com.hig.iga_works_sdk.util.CustomLocationManager;
-import java.util.HashMap;
-import java.util.Map;
 
 public class IGASDKApplication extends Application {
     private static final String TAG = "IGASDKApplication";
@@ -34,13 +32,6 @@ public class IGASDKApplication extends Application {
 
         IGASDK.init("inqbator@naver.com");
         IGASDK.setIgasdkApplication(this);
-
-        Map<String, Object> mapOfUserProperty = new HashMap<>();
-        mapOfUserProperty.put("birthyear", 1986);
-        mapOfUserProperty.put("gender", "m");
-        mapOfUserProperty.put("level", 36);
-        mapOfUserProperty.put("gold", 300);
-        IGASDK.setUserProperty(mapOfUserProperty);
 
         // Set LocationManager before request location.
         setCustomLocationManager();
