@@ -25,7 +25,6 @@ public class ExampleInstrumentedTest {
     public void setApplication() {
         context = InstrumentationRegistry.getInstrumentation().getTargetContext().getApplicationContext();
         igasdkApplication = ApplicationProvider.getApplicationContext();
-        igasdkApplication.setCustomLocationManager();
         IGASDK.setIgasdkApplication(igasdkApplication);
     }
 
