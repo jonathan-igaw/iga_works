@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">iga_works</string>
+    <string name="birth_year">birth year</string>
+    <string name="_2022">2022</string>
+    <string name="gender">gender</string>
+    <string name="unknown">Unknown</string>
+    <string name="_220">220</string>
+    <string name="gold">gold</string>
+    <string name="_999999">999999</string>
+    <string name="register_member_button">register member button</string>
+    <string name="menu1">menu</string>
+    <string name="level">level</string>
 </resources>
