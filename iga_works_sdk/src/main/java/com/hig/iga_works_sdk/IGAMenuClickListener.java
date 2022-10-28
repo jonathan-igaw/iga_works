@@ -10,6 +10,10 @@ public abstract class IGAMenuClickListener implements View.OnClickListener {
     private static final String TAG = "IGAClickListener";
     private final String event;
 
+    public IGAMenuClickListener() {
+        this.event = "click";
+    }
+
     public IGAMenuClickListener(String event) {
         this.event = event;
     }
