@@ -31,6 +31,7 @@
 
 ### 2. build.gradle설정
 
+
 ``` xml
 android {
     compileSdk 33
@@ -97,21 +98,24 @@ buttonMenu.setOnClickListener(object: IGAMenuClickListener("사용자가 설정�
 })
 ```
 
+**\[코드 실행 로그\]**
+
+``` 
+10-28 20:26:37.643 20935 20959 D IGASDK  : request jsonBody : {"evt":{"created_at":"20221028202637","event":"test_event","param":{"menu_name":"menu1","menu_id":"30"},"user_properties":{"birthyear":0,"level":0,"gold":0}},"common":{"identity":{"adid":"a5f21bc1-4a1d-48e0-8829-6dee007da8c7","adid_opt_out":false},"device_info":{"os":30,"model":"sdk_gphone_x86","resolution":"1080x1776","is_portrait":true,"platform":"android","network":"mobile","carrier":"Android","language":"en","country":"US"},"package_name":"com.hig.iga_works_sdk","appkey":"inqbator@naver.com"}}
+10-28 20:26:37.703 20935 20959 D IGASDK  : response code : 200
+10-28 20:26:37.703 20935 20959 D IGASDK  : response : {"result":true,"message":"ok"}
+```
+
 **\[코드 실행 결과 요청하는 JSON 파일\]**
 ```
 {
 
     "evt":{
-        "created_at":"20221028135824",
+        "created_at":"20221028202637",
         "event":"사용자가 설정하고 싶은 이벤트명",
-        // location은 사용자가 위치 요청 권한을 설정하지 않으면 null 처리 됩니다.
-        "location":{
-            "lat":37.421998333333335,
-            "lng":-122.084
-        },
         "param":{
-            "menu_name":"com.hig.iga_works:id\/button_menu",
-            "menu_id":2131230819
+            "menu_name":"menu1",
+            "menu_id":"30"
         },
         "user_properties":{
             "birthyear":0,
@@ -138,6 +142,7 @@ buttonMenu.setOnClickListener(object: IGAMenuClickListener("사용자가 설정�
         "package_name":"com.hig.iga_works_sdk",
         "appkey":"inqbator@naver.com"
     }
+
 }
 ```
 
@@ -170,6 +175,16 @@ buttonMenu.setOnClickListener(object: IGAMenuClickListener() {
     }
 })
 ```
+
+**\[코드 실행 로그\]**
+
+``` 
+10-28 20:26:37.643 20935 20959 D IGASDK  : request jsonBody : {"evt":{"created_at":"20221028202637","event":"click","param":{"menu_name":"menu1","menu_id":"30"},"user_properties":{"birthyear":0,"level":0,"gold":0}},"common":{"identity":{"adid":"a5f21bc1-4a1d-48e0-8829-6dee007da8c7","adid_opt_out":false},"device_info":{"os":30,"model":"sdk_gphone_x86","resolution":"1080x1776","is_portrait":true,"platform":"android","network":"mobile","carrier":"Android","language":"en","country":"US"},"package_name":"com.hig.iga_works_sdk","appkey":"inqbator@naver.com"}}
+10-28 20:26:37.703 20935 20959 D IGASDK  : response code : 200
+10-28 20:26:37.703 20935 20959 D IGASDK  : response : {"result":true,"message":"ok"}
+```
+
+
 
 **\[코드 실행 결과 요청하는 JSON 파일\]**
 ``` json
@@ -217,5 +232,6 @@ buttonMenu.setOnClickListener(object: IGAMenuClickListener() {
 
 
 ### 2.로그인-처리
+
 
 ### 3.로그아웃-처리
