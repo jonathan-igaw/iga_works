@@ -129,4 +129,14 @@ public class IGASDKApplication extends Application {
     public String getNetworkOperatorName() {
         return tm.getNetworkOperatorName();
     }
+
+    public void saveUserId(String userId) {
+        Log.d(TAG, "saveUserId: ");
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putString("user_id", userId).apply();
+    }
+
+    public void deleteUserId() {
+        Log.d(TAG, "deleteId: ");
+        PreferenceManager.getDefaultSharedPreferences(this).edit().remove("user_id").apply();
+    }
 }

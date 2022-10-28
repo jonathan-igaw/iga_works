@@ -32,6 +32,16 @@ public class IGASDK {
         APP_KEY = appkey;   //appkey가 필수적으로 필요합니다.
     }
 
+    public static void login(String userId) {
+        Log.d(TAG, "login: ");
+        igasdkApplication.saveUserId(userId);
+    }
+
+    public static void logout() {
+        Log.d(TAG, "logout: ");
+        igasdkApplication.deleteUserId();
+    }
+
     public static void setIgasdkApplication(IGASDKApplication application) {
         igasdkApplication = application;
     }
