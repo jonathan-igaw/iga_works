@@ -1,5 +1,6 @@
 package com.hig.iga_works_sdk;
 
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Build;
 import android.util.Log;
@@ -25,10 +26,10 @@ public class IGASDK {
     private static final UserInfo userInfo = new UserInfo();
     private static IGASDKApplication igasdkApplication;
 
-    // SDK를 초기화 합니다. appkey가 필수적으로 필요합니다.
+    // SDK를 초기화 합니다.
     public static void init(String appkey) {
         Log.d(TAG, "init: appkey = "+appkey);
-        APP_KEY = appkey;
+        APP_KEY = appkey;   //appkey가 필수적으로 필요합니다.
     }
 
     public static void setIgasdkApplication(IGASDKApplication application) {
@@ -37,17 +38,12 @@ public class IGASDK {
 
     public static void setUserProperty(Map<String, Object> keyValue) {
         Log.d(TAG, "setUserProperty: ");
-        Integer birthYear = (Integer) keyValue.getOrDefault("birthyear", 0);
-        if (birthYear != null) userInfo.setBirthYear(birthYear);
-
-        String gender = (String) keyValue.getOrDefault("gender", "m");
-        if (gender != null) userInfo.setGender(gender);
-
-        Integer level = (Integer) keyValue.getOrDefault("level", 0);
-        if (level != null) userInfo.setLevel(level);
-
-        Integer gold = (Integer) keyValue.getOrDefault("gold", 0);
-        if (gold != null) userInfo.setGold(gold);
+        igasdkApplication.setUserProperty(keyValue);
+        SharedPreferences preferences = igasdkApplication.getSharedPreferences();
+        userInfo.setBirthYear(preferences.getInt("birthyear", 0));
+        userInfo.setGender(preferences.getString("gender", ""));
+        userInfo.setLevel(preferences.getInt("level", 0));
+        userInfo.setGold(preferences.getInt("gold", 0));
     }
 
     private static JSONObject getAddEventJsonBody(String eventName, Map<String, Object> map) {
