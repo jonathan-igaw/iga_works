@@ -1,6 +1,8 @@
 package com.hig.iga_works_sdk;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -87,5 +89,21 @@ public class ExampleInstrumentedTest {
         map.remove("lng");
         map.put("appkey", "inqbator@naver.com");
         assertTrue(IGASDK.addEvent("test_event", map));
+    }
+
+    @Test
+    public void login_isUserInfoSaved() {
+        IGASDK.setIgasdkApplication(igasdkApplication);
+        IGASDK.login("tomas");
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(igasdkApplication);
+        assertEquals(sp.getString("user_id", "none"), "tomas");
+    }
+
+    @Test
+    public void logout_isUserInfoDeleted() {
+        IGASDK.setIgasdkApplication(igasdkApplication);
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(igasdkApplication);
+        sp.edit().remove("user_id").apply();
+        assertEquals(sp.getString("user_id", "none"), "none");
     }
 }
