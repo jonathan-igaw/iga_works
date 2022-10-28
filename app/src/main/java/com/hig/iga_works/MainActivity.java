@@ -27,12 +27,11 @@ public class MainActivity extends AppCompatActivity {
         requestLocationPermission();
 
         Button buttonMenu = findViewById(R.id.button_menu);
-        buttonMenu.setOnClickListener(new IGAMenuClickListener(TAG + " - Click Button") {
+        buttonMenu.setOnClickListener(new IGAMenuClickListener() {
             @Override
             public void onClick(View view) {
                 super.onClick(view);
-                Log.d(TAG, "IGA Clicked Listener called: ");
-                Toast.makeText(MainActivity.this.getApplicationContext(), "button is clicked", Toast.LENGTH_LONG).show();
+                // 사용자가 하고 싶은 행위
             }
         });
 
