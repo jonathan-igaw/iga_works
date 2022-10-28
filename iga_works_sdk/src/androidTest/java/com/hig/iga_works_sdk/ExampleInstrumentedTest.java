@@ -27,7 +27,7 @@ public class ExampleInstrumentedTest {
     public void setApplication() {
         context = InstrumentationRegistry.getInstrumentation().getTargetContext().getApplicationContext();
         igasdkApplication = ApplicationProvider.getApplicationContext();
-        IGASDK.setIgasdkApplication(igasdkApplication);
+        IGASDK.setIGASDKApplication(igasdkApplication);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class ExampleInstrumentedTest {
 
     @Test
     public void addEventWithNullMap_isCorrect() {
-        IGASDK.setIgasdkApplication(igasdkApplication);
+        IGASDK.setIGASDKApplication(igasdkApplication);
         assertTrue(IGASDK.addEvent("test_event", null));
     }
 
@@ -84,7 +84,7 @@ public class ExampleInstrumentedTest {
         // app key
         map.put("appkey", "inqbator@naver.com");
 
-        IGASDK.setIgasdkApplication(igasdkApplication);
+        IGASDK.setIGASDKApplication(igasdkApplication);
         map.remove("lat");
         map.remove("lng");
         map.put("appkey", "inqbator@naver.com");
@@ -93,7 +93,7 @@ public class ExampleInstrumentedTest {
 
     @Test
     public void login_isUserInfoSaved() {
-        IGASDK.setIgasdkApplication(igasdkApplication);
+        IGASDK.setIGASDKApplication(igasdkApplication);
         IGASDK.login("tomas");
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(igasdkApplication);
         assertEquals(sp.getString("user_id", "none"), "tomas");
@@ -101,7 +101,7 @@ public class ExampleInstrumentedTest {
 
     @Test
     public void logout_isUserInfoDeleted() {
-        IGASDK.setIgasdkApplication(igasdkApplication);
+        IGASDK.setIGASDKApplication(igasdkApplication);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(igasdkApplication);
         sp.edit().remove("user_id").apply();
         assertEquals(sp.getString("user_id", "none"), "none");
