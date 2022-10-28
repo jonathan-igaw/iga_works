@@ -35,7 +35,7 @@ public class IGASDKApplication extends Application {
         setCustomLocationManager();
 
         IGASDK.init("inqbator@naver.com");
-        IGASDK.setIgasdkApplication(this);
+        IGASDK.setIGASDKApplication(this);
 
         // Set LocationManager before request location.
         setCustomLocationManager();
@@ -97,12 +97,10 @@ public class IGASDKApplication extends Application {
     }
 
     public void requestLocationUpdates() {
-        Log.d(TAG, "setLocationManager: ");
         clm.requestLocationUpdates();
     }
 
     public Location getLocation() {
-        Log.d(TAG, "getLocation: ");
         return clm.getLastLocation();
     }
 
@@ -144,7 +142,7 @@ public class IGASDKApplication extends Application {
     }
 
     public void deleteUserId() {
-        Log.d(TAG, "deleteId: ");
+        Log.d(TAG, "deleteUserId: ");
         PreferenceManager.getDefaultSharedPreferences(this).edit().remove("user_id").apply();
     }
 }

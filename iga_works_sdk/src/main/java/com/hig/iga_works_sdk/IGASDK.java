@@ -27,7 +27,7 @@ public class IGASDK {
 
     // SDK를 초기화 합니다.
     public static void init(String appkey) {
-        Log.d(TAG, "init: appkey = "+appkey);
+        Log.d(TAG, "init: appkey : "+appkey);
         APP_KEY = appkey;   //appkey가 필수적으로 필요합니다.
     }
 
@@ -41,7 +41,7 @@ public class IGASDK {
         igasdkApplication.deleteUserId();
     }
 
-    public static void setIgasdkApplication(IGASDKApplication application) {
+    public static void setIGASDKApplication(IGASDKApplication application) {
         igasdkApplication = application;
     }
 
@@ -52,7 +52,6 @@ public class IGASDK {
     }
 
     private static JSONObject getAddEventJsonBody(String eventName, Map<String, Object> map) {
-        Log.d(TAG, "getAddEventJsonBody: ");
         JSONObject jsonObject = new JSONObject();
         if (map == null) {
             setEvtContent(eventName, jsonObject);
@@ -65,7 +64,6 @@ public class IGASDK {
     }
 
     private static void setUserPropertiesJsonObject(JSONObject userPropertiesJsonObject) {
-        Log.d(TAG, "setUserPropertiesJsonObject: ");
         // user_properties
         try {
             userPropertiesJsonObject.put("birthyear", userInfo.getBirthYear());
@@ -79,7 +77,6 @@ public class IGASDK {
     }
 
     private static void setEvtContent(String eventName, JSONObject jsonObject) {
-        Log.d(TAG, "setEvtContent: ");
         JSONObject evt = new JSONObject();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());
         String createdAt = sdf.format(System.currentTimeMillis());
@@ -107,7 +104,6 @@ public class IGASDK {
     }
 
     private static void setEvtContent(String eventName, JSONObject jsonObject, Map<String, Object> map) {
-        Log.d(TAG, "setEvtContent: ");
         JSONObject evt = new JSONObject();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());
         String createdAt = sdf.format(System.currentTimeMillis());
@@ -144,7 +140,6 @@ public class IGASDK {
     }
 
     private static void setCommonContent(JSONObject jsonObject) {
-        Log.d(TAG, "setCommonContent: ");
         try {
             // common
             JSONObject common = new JSONObject();
@@ -182,12 +177,11 @@ public class IGASDK {
 
     // 이벤트를 입력합니다.
     public static boolean addEvent(String eventName, Map<String, Object> map) {
-        Log.d(TAG, "addEvent: ");
         String suffix = "/api/AddEvent";
         String httpMethod = "POST";
         String contentType = "application/json";
         String jsonValue = getAddEventJsonBody(eventName, map).toString();
-        Log.d(TAG, "request jsonValue : "+jsonValue);
+        Log.d(TAG, "request jsonBody : "+jsonValue);
 
         try {
             URL url = new URL(DOMAIN+suffix);
@@ -224,7 +218,6 @@ public class IGASDK {
     }
 
     public static void getEvent(String appKey, int length) {
-        Log.d(TAG, "getEvent: ");
         String host = "assignment.ad-brix.com";
         String url = "/api/GetEvent";
         String httpMethod = "post";
@@ -235,11 +228,11 @@ public class IGASDK {
         try{
             int responseCode = connection.getResponseCode();
             if(responseCode == 400){
-                System.out.println("400 : command error");
+                Log.d(TAG, "readResponseCode: 400 : command error");
             } else if (responseCode == 500){
-                System.out.println("500 : Server error");
+                Log.d(TAG, "readResponseCode: 500 : Server error");
             } else {
-                System.out.println("response code : " + responseCode);
+                Log.d(TAG, "response code : " + responseCode);
             }
         } catch (IOException e){
             Log.w(TAG, "readResponseCode: ", e);
@@ -247,17 +240,14 @@ public class IGASDK {
     }
 
     private static int[] getResolution() {
-        Log.d(TAG, "getResolution: ");
         return igasdkApplication.getResolution();
     }
 
     private static boolean isPortrait() {
-        Log.d(TAG, "isPortrait: ");
         return igasdkApplication.isPortrait();
     }
 
     private static String getNetworkStatus() {
-        Log.d(TAG, "getNetworkStatus: ");
         return igasdkApplication.getNetworkStatus();
     }
 
@@ -266,7 +256,6 @@ public class IGASDK {
     }
 
     private static Location getLastLocation() {
-        Log.d(TAG, "getLastLocation: ");
         return igasdkApplication.getLocation();
     }
 }
