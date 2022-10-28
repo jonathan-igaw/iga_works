@@ -25,6 +25,9 @@
 
 ### 1. AAR 파일 프로젝트에 추가
 
+![AAR File setting](/images/AAR경로-설정.png)
+
+
 ### 2. build.gradle-설정
 
 ### 3. AndroidManifest.xml 설정
