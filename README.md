@@ -266,7 +266,7 @@ if (isLoginSuccess) {
 
 **\[Java Kotlin 공통 코드\]**
 ``` java
-// if : 로그인 성공하면, 사용자의 아이디를 등록합니다.
+// if : 로그아웃에 성공하면 사용자의 정보를 삭제합니다.
 if (isLogoutSuccess) {
     IGASDK.logout();
 }
