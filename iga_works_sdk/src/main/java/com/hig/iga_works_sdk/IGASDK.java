@@ -1,6 +1,5 @@
 package com.hig.iga_works_sdk;
 
-import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Build;
 import android.util.Log;
@@ -23,7 +22,7 @@ public class IGASDK {
     private static final String TAG = "IGASDK";
     private static final String DOMAIN = "http://adbrix-sdk-assignment-backend-115895936.ap-northeast-1.elb.amazonaws.com";
     private static String APP_KEY = "inqbator@naver.com";
-    private static final UserInfo userInfo = new UserInfo();
+    private static UserInfo userInfo = new UserInfo();
     private static IGASDKApplication igasdkApplication;
 
     // SDK를 초기화 합니다.
@@ -48,12 +47,8 @@ public class IGASDK {
 
     public static void setUserProperty(Map<String, Object> keyValue) {
         Log.d(TAG, "setUserProperty: ");
-        igasdkApplication.setUserProperty(keyValue);
-        SharedPreferences preferences = igasdkApplication.getSharedPreferences();
-        userInfo.setBirthYear(preferences.getInt("birthyear", 0));
-        userInfo.setGender(preferences.getString("gender", ""));
-        userInfo.setLevel(preferences.getInt("level", 0));
-        userInfo.setGold(preferences.getInt("gold", 0));
+        igasdkApplication.saveUserProperty(keyValue);
+        userInfo = igasdkApplication.getUserProperty();
     }
 
     private static JSONObject getAddEventJsonBody(String eventName, Map<String, Object> map) {

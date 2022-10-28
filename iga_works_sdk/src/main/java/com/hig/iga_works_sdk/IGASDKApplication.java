@@ -14,6 +14,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
+import com.hig.iga_works_sdk.dto.UserInfo;
 import com.hig.iga_works_sdk.util.CustomLocationManager;
 import java.util.Map;
 
@@ -64,7 +65,7 @@ public class IGASDKApplication extends Application {
         clm = new CustomLocationManager(getApplicationContext());
     }
 
-    public void setUserProperty(Map<String, Object> keyValue) {
+    public void saveUserProperty(Map<String, Object> keyValue) {
         Log.d(TAG, "setUserProperty: ");
         SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preference.edit();
@@ -84,8 +85,15 @@ public class IGASDKApplication extends Application {
         editor.apply();
     }
 
-    public SharedPreferences getSharedPreferences() {
-        return PreferenceManager.getDefaultSharedPreferences(this);
+    public UserInfo getUserProperty() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        UserInfo userInfo = new UserInfo();
+        userInfo.setBirthYear(preferences.getInt("birthyear", 0));
+        userInfo.setGender(preferences.getString("gender", ""));
+        userInfo.setLevel(preferences.getInt("level", 0));
+        userInfo.setGold(preferences.getInt("gold", 0));
+        return userInfo;
     }
 
     public void requestLocationUpdates() {
