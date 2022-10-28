@@ -63,12 +63,158 @@ dependencies {
         ...
 ```
 application 태그의 name 속성을 IGASDKApplication로 설정합니다.
+
 이로 인해 사용자의 앱이 실행될 때, 기본 Application으로 초기화 되지 않고 IGASDKApplication로 초기화됩니다.
 
 <hr>
 
 ## 사용법
 ### 1.클릭-이벤트-처리
+IGASDK는 View.OnClickListner를 상속 받는 IGAMenuClickListener 클래스를 제공합니다.
+메뉴 클릭 이벤트를 처리할 때, 해당 클래스를 상속 받는 ClickListener를 사용하면 사용자가 따로 처리하지 않아도 알아서 메뉴에 대한 정보를 서버로 전송합니다.
+
+**\[Java 코드\]**
+``` java
+Button buttonMenu = findViewById(R.id.button_menu);
+buttonMenu.setOnClickListener(new IGAMenuClickListener("사용자가 설정하고 싶은 이벤트명") {
+    @Override
+    public void onClick(View view) {
+        super.onClick(view);
+        // 사용자가 하고 싶은 행위 
+    }
+});
+```
+
+**\[Kotlin 코드\]**
+
+``` kotlin
+val buttonMenu = findViewById<Button>(R.id.button_findid_submit)
+buttonMenu.setOnClickListener(object: IGAMenuClickListener("사용자가 설정하고 싶은 이벤트명") {
+    override fun onClick(view: View?) {
+        super.onClick(view)
+        // 사용자가 하고 싶은 행위
+    }
+})
+```
+
+**\[코드 실행 결과 요청하는 JSON 파일\]**
+```
+{
+
+    "evt":{
+        "created_at":"20221028135824",
+        "event":"사용자가 설정하고 싶은 이벤트명",
+        // location은 사용자가 위치 요청 권한을 설정하지 않으면 null 처리 됩니다.
+        "location":{
+            "lat":37.421998333333335,
+            "lng":-122.084
+        },
+        "param":{
+            "menu_name":"com.hig.iga_works:id\/button_menu",
+            "menu_id":2131230819
+        },
+        "user_properties":{
+            "birthyear":0,
+            "level":0,
+            "gold":0
+        }
+    },
+    "common":{
+        "identity":{
+            "adid":"a5f21bc1-4a1d-48e0-8829-6dee007da8c7",
+            "adid_opt_out":false
+        },
+        "device_info":{
+            "os":30,
+            "model":"sdk_gphone_x86",
+            "resolution":"1080x1776",
+            "is_portrait":true,
+            "platform":"android",
+            "network":"mobile",
+            "carrier":"Android",
+            "language":"en",
+            "country":"US"
+        },
+        "package_name":"com.hig.iga_works_sdk",
+        "appkey":"inqbator@naver.com"
+    }
+}
+```
+
+
+
+<br>
+만약, 사용자가 설정하고 싶은 이벤트명이 없으면 기본 생성자를 사용하면 됩니다.
+
+기본 생성자를 사용하는 경우에 이벤트명은 click이 나옵니다.
+
+**\[Java 코드\]**
+``` java
+Button buttonMenu = findViewById(R.id.button_menu);
+buttonMenu.setOnClickListener(new IGAMenuClickListener() {
+    @Override
+    public void onClick(View view) {
+        super.onClick(view);
+        // 사용자가 하고 싶은 행위 
+    }
+});
+```
+
+**\[Kotlin 코드\]**
+``` kotlin
+val buttonMenu = findViewById<Button>(R.id.button_findid_submit)
+buttonMenu.setOnClickListener(object: IGAMenuClickListener() {
+    override fun onClick(view: View?) {
+        super.onClick(view)
+        // 사용자가 하고 싶은 행위
+    }
+})
+```
+
+**\[코드 실행 결과 요청하는 JSON 파일\]**
+``` json
+{
+
+    "evt":{
+        "created_at":"20221028141823",
+        "event":"click",
+        "location":{
+            "lat":37.421998333333335,
+            "lng":-122.084
+        },
+        "param":{
+            "menu_name":"com.hig.iga_works:id\/button_menu",
+            "menu_id":2131230819
+        },
+        "user_properties":{
+            "birthyear":0,
+            "level":0,
+            "gold":0
+        }
+    },
+    "common":{
+        "identity":{
+            "adid":"a5f21bc1-4a1d-48e0-8829-6dee007da8c7",
+            "adid_opt_out":false
+        },
+        "device_info":{
+            "os":30,
+            "model":"sdk_gphone_x86",
+            "resolution":"1080x1776",
+            "is_portrait":true,
+            "platform":"android",
+            "network":"mobile",
+            "carrier":"Android",
+            "language":"en",
+            "country":"US"
+        },
+        "package_name":"com.hig.iga_works_sdk",
+        "appkey":"inqbator@naver.com"
+    }
+
+}
+```
+
 
 ### 2.로그인-처리
 
