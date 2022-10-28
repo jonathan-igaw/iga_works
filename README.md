@@ -21,11 +21,14 @@ IGA_WORKS는 사용자가 메뉴를 클릭할 때, 어떤 메뉴를 누가 언�
 [3. AndroidManifest.xml 설정](##3.AndroidManifest.xml-설정)
 
 ### [사용법](###사용법)
-[1. 클릭 이벤트 처리](##1.클릭-이벤트-처리)
 
-[2. 로그인 처리](##2.로그인-처리)
+[1. 사용자 정보 설정](#1.사용자-정보-설정)
 
-[3. 로그아웃 처리](##3.로그아웃-처리)
+[2. 클릭 이벤트 처리](##2.클릭-이벤트-처리)
+
+[3. 로그인 처리](##3.로그인-처리)
+
+[4. 로그아웃 처리](##4.로그아웃-처리)
 
 <hr>
 
@@ -78,7 +81,46 @@ application 태그의 name 속성을 IGASDKApplication로 설정합니다.
 <hr>
 
 ## 사용법
-### 1.클릭-이벤트-처리
+
+### 1. 사용자 정보 설정
+
+IGASDK는 사용자의 정보를 설정하여 데이터를 수집할 때, 사용자의 정보도 같이 수집할 수 있습니다.
+IGASDK의 setUserProperty(Map map)메소드를 이용하여 이를 구현할 수 있습니다.
+
+**\[Java 코드\]**
+
+``` java
+Map<String, Object> mapOfUserProperty = new HashMap<>();
+mapOfUserProperty.put("birthyear", 2022);
+mapOfUserProperty.put("gender", "Unknown");
+mapOfUserProperty.put("level", 220);
+mapOfUserProperty.put("gold", 999999);
+IGASDK.setUserProperty(mapOfUserProperty);
+```
+
+**\[Kotlin 코드\]**
+
+``` kotlin
+val mapOfUserProperty = HashMap<String, Object>()
+mapOfUserProperty.put("birthyear", 2022)
+mapOfUserProperty.put("gender", "Unknown")
+mapOfUserProperty.put("level", 220)
+mapOfUserProperty.put("gold", 999999)
+IGASDK.setUserProperty(mapOfUserProperty)
+```
+
+
+**\[코드 실행 로그\]**
+
+```
+D  request jsonValue : {"evt":{"created_at":"20221028220052","event":"MainActivity - Click Register Button","location":{"lat":37.421998333333335,"lng":-122.084},"param":{"menu_name":"com.hig.iga_works:id\/button_register_member_info","menu_id":2131231206},"user_properties":{"birthyear":2022,"gender":"Unknown","level":220,"gold":999999}},"common":{"identity":{"adid":"a5f21bc1-4a1d-48e0-8829-6dee007da8c7","adid_opt_out":false},"device_info":{"os":30,"model":"sdk_gphone_x86","resolution":"1080x1776","is_portrait":true,"platform":"android","network":"mobile","carrier":"Android","language":"en","country":"US"},"package_name":"com.hig.iga_works_sdk","appkey":"inqbator@naver.com"}}
+I  response code : 200
+D  response : {"result":true,"message":"ok"}
+```
+
+
+
+### 2.클릭-이벤트-처리
 IGASDK는 View.OnClickListner를 상속 받는 IGAMenuClickListener 클래스를 제공합니다.
 메뉴 클릭 이벤트를 처리할 때, 해당 클래스를 상속 받는 ClickListener를 사용하면 사용자가 따로 처리하지 않아도 알아서 메뉴에 대한 정보를 서버로 전송합니다.
 
@@ -109,9 +151,9 @@ buttonMenu.setOnClickListener(object: IGAMenuClickListener("사용자가 설정�
 **\[코드 실행 로그\]**
 
 ``` 
-10-28 20:26:37.643 20935 20959 D IGASDK  : request jsonBody : {"evt":{"created_at":"20221028202637","event":"test_event","param":{"menu_name":"menu1","menu_id":"30"},"user_properties":{"birthyear":0,"level":0,"gold":0}},"common":{"identity":{"adid":"a5f21bc1-4a1d-48e0-8829-6dee007da8c7","adid_opt_out":false},"device_info":{"os":30,"model":"sdk_gphone_x86","resolution":"1080x1776","is_portrait":true,"platform":"android","network":"mobile","carrier":"Android","language":"en","country":"US"},"package_name":"com.hig.iga_works_sdk","appkey":"inqbator@naver.com"}}
-10-28 20:26:37.703 20935 20959 D IGASDK  : response code : 200
-10-28 20:26:37.703 20935 20959 D IGASDK  : response : {"result":true,"message":"ok"}
+D IGASDK  : request jsonBody : {"evt":{"created_at":"20221028202637","event":"test_event","param":{"menu_name":"menu1","menu_id":"30"},"user_properties":{"birthyear":0,"level":0,"gold":0}},"common":{"identity":{"adid":"a5f21bc1-4a1d-48e0-8829-6dee007da8c7","adid_opt_out":false},"device_info":{"os":30,"model":"sdk_gphone_x86","resolution":"1080x1776","is_portrait":true,"platform":"android","network":"mobile","carrier":"Android","language":"en","country":"US"},"package_name":"com.hig.iga_works_sdk","appkey":"inqbator@naver.com"}}
+D IGASDK  : response code : 200
+D IGASDK  : response : {"result":true,"message":"ok"}
 ```
 
 **\[코드 실행 결과 요청하는 JSON 파일\]**
@@ -187,9 +229,9 @@ buttonMenu.setOnClickListener(object: IGAMenuClickListener() {
 **\[코드 실행 로그\]**
 
 ``` 
-10-28 20:26:37.643 20935 20959 D IGASDK  : request jsonBody : {"evt":{"created_at":"20221028202637","event":"click","param":{"menu_name":"menu1","menu_id":"30"},"user_properties":{"birthyear":0,"level":0,"gold":0}},"common":{"identity":{"adid":"a5f21bc1-4a1d-48e0-8829-6dee007da8c7","adid_opt_out":false},"device_info":{"os":30,"model":"sdk_gphone_x86","resolution":"1080x1776","is_portrait":true,"platform":"android","network":"mobile","carrier":"Android","language":"en","country":"US"},"package_name":"com.hig.iga_works_sdk","appkey":"inqbator@naver.com"}}
-10-28 20:26:37.703 20935 20959 D IGASDK  : response code : 200
-10-28 20:26:37.703 20935 20959 D IGASDK  : response : {"result":true,"message":"ok"}
+D IGASDK  : request jsonBody : {"evt":{"created_at":"20221028202637","event":"click","param":{"menu_name":"menu1","menu_id":"30"},"user_properties":{"birthyear":0,"level":0,"gold":0}},"common":{"identity":{"adid":"a5f21bc1-4a1d-48e0-8829-6dee007da8c7","adid_opt_out":false},"device_info":{"os":30,"model":"sdk_gphone_x86","resolution":"1080x1776","is_portrait":true,"platform":"android","network":"mobile","carrier":"Android","language":"en","country":"US"},"package_name":"com.hig.iga_works_sdk","appkey":"inqbator@naver.com"}}
+D IGASDK  : response code : 200
+D IGASDK  : response : {"result":true,"message":"ok"}
 ```
 
 
@@ -239,7 +281,7 @@ buttonMenu.setOnClickListener(object: IGAMenuClickListener() {
 ```
 
 
-### 2.로그인-처리
+### 3.로그인-처리
 
 사용자들의 데이터를 수집하는 것도 중요하지만, 더욱 중요한 것은 상호작용하는 주체가 누구인지입니다.
 
@@ -258,7 +300,7 @@ if (isLoginSuccess) {
 ```
 
 
-### 3.로그아웃-처리
+### 4.로그아웃-처리
 
 사용자가 로그아웃을 했는데도 해당 사용자의 정보를 수집하는 행위는 잘못된 정보 수집이나 개인정보 침해로 이어질 수 있습니다.
 
