@@ -1,15 +1,19 @@
-package com.hig.iga_works;
+package com.hig.iga_works.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.app.NotificationManager;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.hig.iga_works.R;
+import com.hig.iga_works.view.LoginActivity;
 import com.hig.iga_works_sdk.IGAMenuClickListener;
 import com.hig.iga_works_sdk.IGASDK;
 import java.util.HashMap;
@@ -55,6 +59,16 @@ public class MainActivity extends AppCompatActivity {
                 mapOfUserProperty.put("level", Integer.parseInt(((EditText) findViewById(R.id.edittext_level)).getText().toString()));
                 mapOfUserProperty.put("gold", Integer.parseInt(((EditText) findViewById(R.id.edittext_gold)).getText().toString()));
                 IGASDK.setUserProperty(mapOfUserProperty);
+            }
+        });
+
+        Button openLoginActivity = findViewById(R.id.button_open_second_activity);
+        openLoginActivity.setOnClickListener(new IGAMenuClickListener() {
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                startActivity(intent);
             }
         });
     }
