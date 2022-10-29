@@ -11,4 +11,7 @@
     <string name="menu1">Notification in 5second Button</string>
     <string name="level">level</string>
     <string name="open_second_activity">open login activity</string>
+    <string name="input_user_id">INPUT USER ID</string>
+    <string name="login">login</string>
+    <string name="logout">LOGOUT</string>
 </resources>
