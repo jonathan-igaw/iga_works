@@ -1,6 +1,8 @@
 package com.hig.iga_works_sdk;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -25,7 +27,7 @@ public class ExampleInstrumentedTest {
     public void setApplication() {
         context = InstrumentationRegistry.getInstrumentation().getTargetContext().getApplicationContext();
         igasdkApplication = ApplicationProvider.getApplicationContext();
-        IGASDK.setIgasdkApplication(igasdkApplication);
+        IGASDK.setIGASDKApplication(igasdkApplication);
     }
 
     @Test
@@ -62,7 +64,7 @@ public class ExampleInstrumentedTest {
 
     @Test
     public void addEventWithNullMap_isCorrect() {
-        IGASDK.setIgasdkApplication(igasdkApplication);
+        IGASDK.setIGASDKApplication(igasdkApplication);
         assertTrue(IGASDK.addEvent("test_event", null));
     }
 
@@ -82,10 +84,26 @@ public class ExampleInstrumentedTest {
         // app key
         map.put("appkey", "inqbator@naver.com");
 
-        IGASDK.setIgasdkApplication(igasdkApplication);
+        IGASDK.setIGASDKApplication(igasdkApplication);
         map.remove("lat");
         map.remove("lng");
         map.put("appkey", "inqbator@naver.com");
         assertTrue(IGASDK.addEvent("test_event", map));
+    }
+
+    @Test
+    public void login_isUserInfoSaved() {
+        IGASDK.setIGASDKApplication(igasdkApplication);
+        IGASDK.login("tomas");
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(igasdkApplication);
+        assertEquals(sp.getString("user_id", "none"), "tomas");
+    }
+
+    @Test
+    public void logout_isUserInfoDeleted() {
+        IGASDK.setIGASDKApplication(igasdkApplication);
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(igasdkApplication);
+        sp.edit().remove("user_id").apply();
+        assertEquals(sp.getString("user_id", "none"), "none");
     }
 }
