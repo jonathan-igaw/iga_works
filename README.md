@@ -20,7 +20,7 @@ IGA_WORKS는 사용자가 메뉴를 클릭할 때, 어떤 메뉴를 누가 언�
 
 [3. AndroidManifest.xml 설정](#3androidmanifestxml-설정)
 
-### [사용법](###사용법)
+### [사용법](#사용법)
 
 [1. 사용자 정보 설정](#1사용자-정보-설정)
 
@@ -120,7 +120,7 @@ D  response : {"result":true,"message":"ok"}
 
 <hr>
 
-### 2.클릭-이벤트-처리
+### 2.클릭 이벤트 처리
 IGASDK는 View.OnClickListner를 상속 받는 IGAMenuClickListener 클래스를 제공합니다.
 메뉴 클릭 이벤트를 처리할 때, 해당 클래스를 상속 받는 ClickListener를 사용하면 사용자가 따로 처리하지 않아도 알아서 메뉴에 대한 정보를 서버로 전송합니다.
 
