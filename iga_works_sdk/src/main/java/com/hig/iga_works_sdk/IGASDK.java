@@ -67,6 +67,7 @@ public class IGASDK {
             return importance;
         }
     }
+    
     private static final String TAG = "IGASDK";
     private static final String DOMAIN = "http://adbrix-sdk-assignment-backend-115895936.ap-northeast-1.elb.amazonaws.com";
     private static String APP_KEY = "inqbator@naver.com";
