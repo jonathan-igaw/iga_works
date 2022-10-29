@@ -59,11 +59,19 @@
         android:text="@string/register_member_button"/>
 
     <Button
-        android:id="@+id/button_menu"
+        android:id="@+id/button_notification"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_register_member_info"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/menu1"/>
+    <Button
+        android:id="@+id/button_open_second_activity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/button_notification"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/open_second_activity"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
