@@ -18,7 +18,7 @@ IGA_WORKS는 사용자가 메뉴를 클릭할 때, 어떤 메뉴를 누가 언�
 
 [2. build.gradle 설정](#2buildgradle설정)
 
-[3. AndroidManifest.xml 설정](#3AndroidManifestxml설정)
+[3. AndroidManifest.xml 설정](#3androidmanifestxml-설정)
 
 ### [사용법](###사용법)
 
@@ -64,7 +64,7 @@ dependencies {
 2. IGASDK가 지원하는 최소 Android API는 24이므로 defaultConfig 블록에 minSdk를 24로 변경합니다.
 3. AAR을 사용하기 위해 dependencies에서 해당 라이브러리를 구현합니다.
 
-### 3. AndroidManifest.xml 설정
+### 3.AndroidManifest.xml 설정
 
 ``` xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -282,7 +282,7 @@ D IGASDK  : response : {"result":true,"message":"ok"}
 
 <hr>
 
-### 3.로그인-처리
+### 3.로그인 처리
 
 사용자들의 데이터를 수집하는 것도 중요하지만, 더욱 중요한 것은 상호작용하는 주체가 누구인지입니다.
 
@@ -301,7 +301,7 @@ if (isLoginSuccess) {
 ```
 <hr>
 
-### 4.로그아웃-처리
+### 4.로그아웃 처리
 
 사용자가 로그아웃을 했는데도 해당 사용자의 정보를 수집하는 행위는 잘못된 정보 수집이나 개인정보 침해로 이어질 수 있습니다.
 
