@@ -1,9 +1,6 @@
 package com.hig.iga_works_sdk;
 
 import android.app.Application;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -11,18 +8,12 @@ import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
-import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
-
-import androidx.core.app.NotificationCompat;
-
 import com.hig.iga_works_sdk.dto.UserInfo;
 import com.hig.iga_works_sdk.util.CustomLocationManager;
 import java.util.Map;
@@ -38,7 +29,6 @@ public class IGASDKApplication extends Application {
     public void onCreate() {
         Log.d(TAG, "onCreate: ");
         super.onCreate();
-        createNotificationChannel();
         setConnectivityManager();
         setWindowManager();
         setTelephoneManager();
@@ -154,37 +144,5 @@ public class IGASDKApplication extends Application {
     public void deleteUserId() {
         Log.d(TAG, "deleteUserId: ");
         PreferenceManager.getDefaultSharedPreferences(this).edit().remove("user_id").apply();
-    }
-
-    private void createNotificationChannel() {
-        Log.d(TAG, "createNotificationChannel: ");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel = new NotificationChannel("1",
-                    "녹음용 알림",
-                    NotificationManager.IMPORTANCE_DEFAULT
-            );
-
-            notificationChannel.setDescription("녹음용 채널입니다.");
-            NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            nm.createNotificationChannel(notificationChannel);
-        }
-    }
-
-    public void setLocalPushNotification(IGASDK.LocalPushProperties lpp, boolean isAlwaysShown) {
-        Log.d(TAG, "setNotification: second : "+lpp.getSecond());
-        Notification notification = new NotificationCompat.Builder(this, String.valueOf(lpp.getEventId()))
-                .setContentTitle(lpp.getTitle())
-                .setContentText(lpp.getContentText())
-                .setSubText(lpp.getSummaryText())
-                .setPriority(lpp.getImportance())
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .build();
-
-        NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        Handler nHanlder = new Handler(Looper.myLooper());
-        nHanlder.postDelayed(
-                () ->  nm.notify(1, notification),
-                lpp.getSecond()
-        );
     }
 }
