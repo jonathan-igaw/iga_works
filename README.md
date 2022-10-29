@@ -16,9 +16,9 @@ IGA_WORKS는 사용자가 메뉴를 클릭할 때, 어떤 메뉴를 누가 언�
 
 [1. AAR 파일 프로젝트에 추가](#1aar-파일-프로젝트에-추가)
 
-[2. build.gradle 설정](#2buildgradle-설정)
+[2. build.gradle 설정](#2buildgradle설정)
 
-[3. AndroidManifest.xml 설정](#3AndroidManifestxml-설정)
+[3. AndroidManifest.xml 설정](#3AndroidManifestxml설정)
 
 ### [사용법](###사용법)
 
