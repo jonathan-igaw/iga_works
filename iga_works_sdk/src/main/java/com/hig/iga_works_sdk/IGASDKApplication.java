@@ -1,19 +1,28 @@
 package com.hig.iga_works_sdk;
 
 import android.app.Application;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
+import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
+import androidx.core.app.NotificationCompat;
+import com.hig.iga_works_sdk.dto.UserInfo;
 import com.hig.iga_works_sdk.util.CustomLocationManager;
-import java.util.HashMap;
 import java.util.Map;
 
 public class IGASDKApplication extends Application {
@@ -33,14 +42,7 @@ public class IGASDKApplication extends Application {
         setCustomLocationManager();
 
         IGASDK.init("inqbator@naver.com");
-        IGASDK.setIgasdkApplication(this);
-
-        Map<String, Object> mapOfUserProperty = new HashMap<>();
-        mapOfUserProperty.put("birthyear", 1986);
-        mapOfUserProperty.put("gender", "m");
-        mapOfUserProperty.put("level", 36);
-        mapOfUserProperty.put("gold", 300);
-        IGASDK.setUserProperty(mapOfUserProperty);
+        IGASDK.setIGASDKApplication(this);
 
         // Set LocationManager before request location.
         setCustomLocationManager();
@@ -70,13 +72,42 @@ public class IGASDKApplication extends Application {
         clm = new CustomLocationManager(getApplicationContext());
     }
 
+    public void saveUserProperty(Map<String, Object> keyValue) {
+        Log.d(TAG, "setUserProperty: ");
+        SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preference.edit();
+
+        Integer birthYear = (Integer) keyValue.getOrDefault("birthyear", 0);
+        if (birthYear != null) editor.putInt("birthyear", birthYear);
+
+        String gender = (String) keyValue.getOrDefault("gender", "m");
+        if (gender != null) editor.putString("gender", gender);
+
+        Integer level = (Integer) keyValue.getOrDefault("level", 0);
+        if (level != null) editor.putInt("level", level);
+
+        Integer gold = (Integer) keyValue.getOrDefault("gold", 0);
+        if (gold != null) editor.putInt("gold", gold);
+
+        editor.apply();
+    }
+
+    public UserInfo getUserProperty() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        UserInfo userInfo = new UserInfo();
+        userInfo.setBirthYear(preferences.getInt("birthyear", 0));
+        userInfo.setGender(preferences.getString("gender", ""));
+        userInfo.setLevel(preferences.getInt("level", 0));
+        userInfo.setGold(preferences.getInt("gold", 0));
+        return userInfo;
+    }
+
     public void requestLocationUpdates() {
-        Log.d(TAG, "setLocationManager: ");
         clm.requestLocationUpdates();
     }
 
     public Location getLocation() {
-        Log.d(TAG, "getLocation: ");
         return clm.getLastLocation();
     }
 
@@ -110,5 +141,48 @@ public class IGASDKApplication extends Application {
 
     public String getNetworkOperatorName() {
         return tm.getNetworkOperatorName();
+    }
+
+    public void saveUserId(String userId) {
+        Log.d(TAG, "saveUserId: ");
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putString("user_id", userId).apply();
+    }
+
+    public void deleteUserId() {
+        Log.d(TAG, "deleteUserId: ");
+        PreferenceManager.getDefaultSharedPreferences(this).edit().remove("user_id").apply();
+    }
+
+    private void createNotificationChannel(String id) {
+        Log.d(TAG, "createNotificationChannel: ");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel(id,
+                    "녹음용 알림",
+                    NotificationManager.IMPORTANCE_DEFAULT
+            );
+
+            notificationChannel.setDescription("녹음용 채널입니다.");
+            NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            nm.createNotificationChannel(notificationChannel);
+        }
+    }
+
+    public void setLocalPushNotification(IGASDK.LocalPushProperties lpp) {
+        Log.d(TAG, "setNotification: second : "+lpp.getMillisecondForDelay());
+        createNotificationChannel(String.valueOf(lpp.getEventId()));
+        Notification notification = new NotificationCompat.Builder(this, String.valueOf(lpp.getEventId()))
+                .setContentTitle(lpp.getContentTitle())
+                .setContentText(lpp.getContentText())
+                .setSubText(lpp.getSubText())
+                .setPriority(lpp.getImportance())
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .build();
+
+        NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        Handler nHanlder = new Handler(Looper.myLooper());
+        nHanlder.postDelayed(
+                () ->  nm.notify(1, notification),
+                lpp.getMillisecondForDelay()
+        );
     }
 }
