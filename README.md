@@ -14,21 +14,21 @@ IGA_WORKS는 사용자가 메뉴를 클릭할 때, 어떤 메뉴를 누가 언�
 
 ### [AAR 삽입방법](###AAR-삽입-방법)
 
-[1. AAR 파일 프로젝트에 추가](##1.AAR-파일-프로젝트에-추가)
+[1. AAR 파일 프로젝트에 추가](#1.AAR-파일-프로젝트에-추가)
 
-[2. build.gradle 설정](##2.build.gradle-설정)
+[2. build.gradle 설정](#2.build.gradle-설정)
 
-[3. AndroidManifest.xml 설정](##3.AndroidManifest.xml-설정)
+[3. AndroidManifest.xml 설정](#3.AndroidManifest.xml-설정)
 
 ### [사용법](###사용법)
 
 [1. 사용자 정보 설정](#1.사용자-정보-설정)
 
-[2. 클릭 이벤트 처리](##2.클릭-이벤트-처리)
+[2. 클릭 이벤트 처리](#2.클릭-이벤트-처리)
 
-[3. 로그인 처리](##3.로그인-처리)
+[3. 로그인 처리](#3.로그인-처리)
 
-[4. 로그아웃 처리](##4.로그아웃-처리)
+[4. 로그아웃 처리](#4.로그아웃-처리)
 
 <hr>
 
@@ -118,7 +118,7 @@ I  response code : 200
 D  response : {"result":true,"message":"ok"}
 ```
 
-
+<hr>
 
 ### 2.클릭-이벤트-처리
 IGASDK는 View.OnClickListner를 상속 받는 IGAMenuClickListener 클래스를 제공합니다.
@@ -280,6 +280,7 @@ D IGASDK  : response : {"result":true,"message":"ok"}
 }
 ```
 
+<hr>
 
 ### 3.로그인-처리
 
@@ -298,7 +299,7 @@ if (isLoginSuccess) {
     IGASDK.login("userId");
 }
 ```
-
+<hr>
 
 ### 4.로그아웃-처리
 
@@ -314,6 +315,8 @@ if (isLogoutSuccess) {
 }
 ```
 
+<hr>
+
 ### 5.로컬 푸시
 
 IGASDK의 로컬 푸시를 사용하면 간단하게 푸시 메시지를 사용자에게 보낼 수 있습니다.
@@ -325,9 +328,9 @@ IGASDK의 setLocalPushNotification() 메소드를 사용해서 푸시 메시지�
 
 ``` java
 IGASDK.LocalPushProperties lpp = new IGASDK.LocalPushProperties(
-        "content title",
-        "content text",
-        "summary text",
+        "contentTitle",
+        "contentText",
+        "summaryText",
         5 * 1000,
         1,
         NotificationManager.IMPORTANCE_HIGH
@@ -339,9 +342,9 @@ IGASDK.setLocalPushNotification(lpp);
 
 ``` kotlin
 val lpp = IGASDK.LocalPushProperties(
-        "content title",
-        "content text",
-        "summary text",
+        "contentTitle",
+        "contentText",
+        "summaryText",
         5 * 1000,
         1,
         NotificationManager.IMPORTANCE_HIGH
@@ -368,8 +371,12 @@ int importance = 알림의 중요도입니다.
 
 알림의 중요도로는 밑에 5가지가 올 수 있습니다. 내용을 파악하고 원하는 알림을 설정하시면 됩니다.
 
+**\[실행 결과\]**
+![](./images/notification)
 
-** \[알림 중요도\] **
+
+**\[알림 중요도\]**
+
 ``` java
 NotificationManager.IMPORTANCE_HIGH         // 알림 표시 ON / 소리 / 팝업으로 표시
 NotificationManager.IMPORTANCE_DEFAULT      // 알림 표시 ON / 소리
