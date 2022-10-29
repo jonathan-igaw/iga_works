@@ -14,6 +14,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
+import androidx.core.app.NotificationCompat;
 import com.hig.iga_works_sdk.dto.UserInfo;
 import com.hig.iga_works_sdk.util.CustomLocationManager;
 import java.util.Map;
@@ -144,5 +145,38 @@ public class IGASDKApplication extends Application {
     public void deleteUserId() {
         Log.d(TAG, "deleteUserId: ");
         PreferenceManager.getDefaultSharedPreferences(this).edit().remove("user_id").apply();
+    }
+
+    private void createNotificationChannel(String id) {
+        Log.d(TAG, "createNotificationChannel: ");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel(id,
+                    "녹음용 알림",
+                    NotificationManager.IMPORTANCE_DEFAULT
+            );
+
+            notificationChannel.setDescription("녹음용 채널입니다.");
+            NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            nm.createNotificationChannel(notificationChannel);
+        }
+    }
+
+    public void setLocalPushNotification(IGASDK.LocalPushProperties lpp) {
+        Log.d(TAG, "setNotification: second : "+lpp.getMillisecondForDelay());
+        createNotificationChannel(String.valueOf(lpp.getEventId()));
+        Notification notification = new NotificationCompat.Builder(this, String.valueOf(lpp.getEventId()))
+                .setContentTitle(lpp.getContentTitle())
+                .setContentText(lpp.getContentText())
+                .setSubText(lpp.getSubText())
+                .setPriority(lpp.getImportance())
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .build();
+
+        NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        Handler nHanlder = new Handler(Looper.myLooper());
+        nHanlder.postDelayed(
+                () ->  nm.notify(1, notification),
+                lpp.getMillisecondForDelay()
+        );
     }
 }

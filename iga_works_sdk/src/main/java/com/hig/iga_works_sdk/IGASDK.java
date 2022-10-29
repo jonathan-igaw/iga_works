@@ -19,6 +19,55 @@ import java.util.Map;
 import java.util.Objects;
 
 public class IGASDK {
+    public static class LocalPushProperties {
+        public LocalPushProperties(
+                String contentTitle,
+                String contentText,
+                String summaryText,
+                long millisecondForDelay,
+                int eventId,
+                int importance
+        ) {
+            this.contentText = contentText;
+            this.contentTitle = contentTitle;
+            this.subText = summaryText;
+            this.millisecondForDelay = millisecondForDelay;
+            this.eventId = eventId;
+            this.importance = importance;
+        }
+
+        private final String contentText;
+        private final String contentTitle;
+        private final String subText;
+        private final long millisecondForDelay;
+        private final int eventId;
+        private final int importance;
+
+        public String getContentText() {
+            return contentText;
+        }
+
+        public String getContentTitle() {
+            return contentTitle;
+        }
+
+        public String getSubText() {
+            return subText;
+        }
+
+        public long getMillisecondForDelay() {
+            return millisecondForDelay;
+        }
+
+        public int getEventId() {
+            return eventId;
+        }
+
+        public int getImportance() {
+            return importance;
+        }
+    }
+    
     private static final String TAG = "IGASDK";
     private static final String DOMAIN = "http://adbrix-sdk-assignment-backend-115895936.ap-northeast-1.elb.amazonaws.com";
     private static String APP_KEY = "inqbator@naver.com";
@@ -39,6 +88,10 @@ public class IGASDK {
     public static void logout() {
         Log.d(TAG, "logout: ");
         igasdkApplication.deleteUserId();
+    }
+
+    public static void setLocalPushNotification(LocalPushProperties lpp) {
+        igasdkApplication.setLocalPushNotification(lpp);
     }
 
     public static void setIGASDKApplication(IGASDKApplication application) {
