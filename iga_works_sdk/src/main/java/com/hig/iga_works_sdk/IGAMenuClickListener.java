@@ -30,12 +30,7 @@ public abstract class IGAMenuClickListener implements View.OnClickListener {
         int menuId = view.getId();
         Map<String, Object> map = getEventMap(event, menuName, menuId);
 
-        new Thread() {
-            @Override
-            public void run() {
-                IGASDK.addEvent(event, map);
-            }
-        }.start();
+        new Thread(() -> IGASDK.addEvent(event, map)).start();
     }
 
     private Map<String, Object> getEventMap(String event, String menuName, int menuId) {
