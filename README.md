@@ -14,7 +14,7 @@ IGA_WORKS는 사용자가 메뉴를 클릭할 때, 어떤 메뉴를 누가 언�
 
 ### [AAR 삽입방법](###AAR-삽입-방법)
 
-[1. AAR 파일 프로젝트에 추가](#1.AAR-파일-프로젝트에-추가)
+[1. AAR 파일 프로젝트에 추가](#1.aar-파일-프로젝트에-추가)
 
 [2. build.gradle 설정](#2.build.gradle-설정)
 
@@ -34,13 +34,13 @@ IGA_WORKS는 사용자가 메뉴를 클릭할 때, 어떤 메뉴를 누가 언�
 
 ## AAR 삽입 방법
 
-### 1. AAR 파일 프로젝트에 추가
+### 1.AAR 파일 프로젝트에 추가
 
 ![AAR File setting](/images/AAR경로-설정.png)
 
 받은 AAR 파일을 \('IGASDK를 사용할 프로젝트 최상단 디렉터리'/libs\) 파일에 집어넣습니다.
 
-### 2. build.gradle설정
+### 2.build.gradle설정
 
 
 ``` xml
