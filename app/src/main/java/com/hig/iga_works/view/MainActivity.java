@@ -1,18 +1,21 @@
-package com.hig.iga_works;
+package com.hig.iga_works.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import android.Manifest;
+import android.app.NotificationManager;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+
+import com.hig.iga_works.R;
+import com.hig.iga_works.view.LoginActivity;
 import com.hig.iga_works_sdk.IGAMenuClickListener;
 import com.hig.iga_works_sdk.IGASDK;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,27 +29,46 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         requestLocationPermission();
 
-        Button buttonMenu = findViewById(R.id.button_menu);
-        buttonMenu.setOnClickListener(new IGAMenuClickListener() {
+        Button notificationBtn = findViewById(R.id.button_notification);
+        notificationBtn.setOnClickListener(new IGAMenuClickListener() {
             @Override
             public void onClick(View view) {
                 super.onClick(view);
+
                 // 사용자가 하고 싶은 행위
+                IGASDK.LocalPushProperties lpp = new IGASDK.LocalPushProperties(
+                        "contentTitle",
+                        "contentText",
+                        "summaryText",
+                        5 * 1000,
+                        1,
+                        NotificationManager.IMPORTANCE_HIGH
+                );
+                IGASDK.setLocalPushNotification(lpp);
             }
         });
 
-        Button buttonOfUserPropertyRegister = findViewById(R.id.button_register_member_info);
-        buttonOfUserPropertyRegister.setOnClickListener(new IGAMenuClickListener(TAG + " - Click Register Button") {
+        Button registerUserInfoBtn = findViewById(R.id.button_register_member_info);
+        registerUserInfoBtn.setOnClickListener(new IGAMenuClickListener(TAG + " - Click Register Button") {
             @Override
             public void onClick(View view) {
                 super.onClick(view);
                 Map<String, Object> mapOfUserProperty = new HashMap<>();
-
                 mapOfUserProperty.put("birthyear", Integer.parseInt(((EditText) findViewById(R.id.edittext_birth_year)).getText().toString()));
                 mapOfUserProperty.put("gender", ((EditText) findViewById(R.id.edittext_gender)).getText().toString());
                 mapOfUserProperty.put("level", Integer.parseInt(((EditText) findViewById(R.id.edittext_level)).getText().toString()));
                 mapOfUserProperty.put("gold", Integer.parseInt(((EditText) findViewById(R.id.edittext_gold)).getText().toString()));
                 IGASDK.setUserProperty(mapOfUserProperty);
+            }
+        });
+
+        Button openLoginActivity = findViewById(R.id.button_open_second_activity);
+        openLoginActivity.setOnClickListener(new IGAMenuClickListener() {
+            @Override
+            public void onClick(View view) {
+                super.onClick(view);
+                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                startActivity(intent);
             }
         });
     }
