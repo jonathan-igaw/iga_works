@@ -314,6 +314,76 @@ if (isLogoutSuccess) {
 }
 ```
 
+### 5.로컬 푸시
+
+IGASDK의 로컬 푸시를 사용하면 간단하게 푸시 메시지를 사용자에게 보낼 수 있습니다.
+
+IGASDK의 setLocalPushNotification() 메소드를 사용해서 푸시 메시지를 보내보세요.
+
+
+**\[Java 코드\]**
+
+``` java
+IGASDK.LocalPushProperties lpp = new IGASDK.LocalPushProperties(
+        "content title",
+        "content text",
+        "summary text",
+        5 * 1000,
+        1,
+        NotificationManager.IMPORTANCE_HIGH
+);
+IGASDK.setLocalPushNotification(lpp);
+```
+
+**\[Kotlin 코드\]**
+
+``` kotlin
+val lpp = IGASDK.LocalPushProperties(
+        "content title",
+        "content text",
+        "summary text",
+        5 * 1000,
+        1,
+        NotificationManager.IMPORTANCE_HIGH
+)
+IGASDK.setLocalPushNotification(lpp)
+```
+
+
+IGASDK의 LocalPushProperties 클래스는 알림을 보내기 위해 필요한 설정을 기록하는 클래스입니다.
+
+멤버 변수를 하나 하나 설명해보겠습니다.
+
+String contentTitle = 알림의 제목을 나타냅니다.
+
+String contentText = 알림의 내용을 나타냅니다.
+
+String summaryText = 알림의 요약 내용을 나타냅니다.
+
+long millisecondForDelay = 알림이 현재 시각을 기준으로 몇 ms 후에 나타날지를 설정하는 변수입니다. 만약 알림이 즉시 뜨길 원하면 0을 5초 후면 5000 = 5 * 1000을 입력하면 됩니다.
+
+int eventId = 알림의 채널입니다.
+
+int importance = 알림의 중요도입니다. 
+
+알림의 중요도로는 밑에 5가지가 올 수 있습니다. 내용을 파악하고 원하는 알림을 설정하시면 됩니다.
+
+
+** \[알림 중요도\] **
+``` java
+NotificationManager.IMPORTANCE_HIGH         // 알림 표시 ON / 소리 / 팝업으로 표시
+NotificationManager.IMPORTANCE_DEFAULT      // 알림 표시 ON / 소리
+NotificationManager.IMPORTANCE_LOW          // 알림 표시 ON / 무음 / 알림 최소화 OFF
+NotificationManager.IMPORTANCE_MIN          //  알림 표시 ON / 무음 / 알림 최소화 ON
+NotificationManager.IMPORTANCE_NONE         // 알림 표시 OFF
+```
+
+
+
+
+
+
+
 
 
 
