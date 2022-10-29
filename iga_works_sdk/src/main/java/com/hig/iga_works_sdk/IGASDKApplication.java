@@ -1,6 +1,9 @@
 package com.hig.iga_works_sdk;
 
 import android.app.Application;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -8,6 +11,9 @@ import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
+import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
