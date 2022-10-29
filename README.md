@@ -30,6 +30,8 @@ IGA_WORKS는 사용자가 메뉴를 클릭할 때, 어떤 메뉴를 누가 언�
 
 [4. 로그아웃 처리](#4로그아웃-처리)
 
+### [테스트 코드 실행](#테스트-코드-실행)
+
 <hr>
 
 ## AAR 삽입 방법
@@ -392,7 +394,20 @@ NotificationManager.IMPORTANCE_MIN          //  알림 표시 ON / 무음 / 알�
 NotificationManager.IMPORTANCE_NONE         // 알림 표시 OFF
 ```
 
+<br>
+<hr>
 
+### 테스트 코드 실행
+
+![테스트 코드 위치](https://user-images.githubusercontent.com/68156400/198815921-fa42a851-e467-4947-a5af-841c64adf80e.png)
+
+프로젝트를 받고 위에 그림과 일치하는 경로로 이동하세요.
+
+![테스트 코드 메소드 위치](https://user-images.githubusercontent.com/68156400/198815954-7ad43031-de92-4d72-a2c0-2316de203f74.png)
+
+마우스가 가리키고 있는 메소드를 실행하시면 테스트 코드가 실행 됩니다.
+
+![테스트 실행 결과](https://user-images.githubusercontent.com/68156400/198816000-89ffed95-d2f0-4064-83be-795ba3752044.png)
 
 
 
