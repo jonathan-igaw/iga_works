@@ -372,10 +372,17 @@ int importance = 알림의 중요도입니다.
 알림의 중요도로는 밑에 5가지가 올 수 있습니다. 내용을 파악하고 원하는 알림을 설정하시면 됩니다.
 
 **\[실행 결과\]**
-![](./images/notification)
+
+![](/images/notification.png)
 
 
 **\[알림 중요도\]**
+
+
+알림 중요도(importance)를 설정함으로써, 알림을 받았을 때 기기에 반응이 달라집니다.
+
+아래 중요도 표를 참조하여 알림을 설정해주세요.
+
 
 ``` java
 NotificationManager.IMPORTANCE_HIGH         // 알림 표시 ON / 소리 / 팝업으로 표시
