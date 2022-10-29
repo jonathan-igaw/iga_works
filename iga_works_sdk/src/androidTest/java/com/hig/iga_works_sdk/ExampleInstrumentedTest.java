@@ -38,7 +38,7 @@ public class ExampleInstrumentedTest {
     }
 
     @Test
-    public void addEvent_isCorrect() {
+    public void addEvent_isSuccess() {
         Log.d(TAG, "addEvent_isCorrect: ");
         Map<String, Object> map = new HashMap<>();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -63,13 +63,13 @@ public class ExampleInstrumentedTest {
     }
 
     @Test
-    public void addEventWithNullMap_isCorrect() {
+    public void addEventWithNullMap_isSuccess() {
         IGASDK.setIGASDKApplication(igasdkApplication);
         assertTrue(IGASDK.addEvent("test_event", null));
     }
 
     @Test
-    public void addEventIfLocationIsNull_isCorrect() {
+    public void addEventIfLocationIsNull_isSuccess() {
         Map<String, Object> map = new HashMap<>();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         map.put("created_at", sdf.format(new Date(System.currentTimeMillis())));
@@ -85,8 +85,6 @@ public class ExampleInstrumentedTest {
         map.put("appkey", "inqbator@naver.com");
 
         IGASDK.setIGASDKApplication(igasdkApplication);
-        map.remove("lat");
-        map.remove("lng");
         map.put("appkey", "inqbator@naver.com");
         assertTrue(IGASDK.addEvent("test_event", map));
     }
@@ -94,9 +92,9 @@ public class ExampleInstrumentedTest {
     @Test
     public void login_isUserInfoSaved() {
         IGASDK.setIGASDKApplication(igasdkApplication);
-        IGASDK.login("tomas");
+        IGASDK.login("tomas kim");
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(igasdkApplication);
-        assertEquals(sp.getString("user_id", "none"), "tomas");
+        assertEquals(sp.getString("user_id", "none"), "tomas kim");
     }
 
     @Test
