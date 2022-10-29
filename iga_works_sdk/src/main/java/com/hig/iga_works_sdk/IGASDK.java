@@ -1,7 +1,5 @@
 package com.hig.iga_works_sdk;
 
-import android.app.NotificationManager;
-import android.content.Context;
 import android.location.Location;
 import android.os.Build;
 import android.util.Log;
@@ -22,86 +20,51 @@ import java.util.Objects;
 
 public class IGASDK {
     public static class LocalPushProperties {
-        private String title;
-        private String contentText;
-        private String contextTitle;
-        private String summaryText;
-        private String bigText;
-        private long second;
-        private int eventId;
-        private String deepLinkUri;
-        private int importance = NotificationManager.IMPORTANCE_HIGH;
-
-        public String getTitle() {
-            return title;
+        public LocalPushProperties(
+                String contentTitle,
+                String contentText,
+                String summaryText,
+                long millisecondForDelay,
+                int eventId,
+                int importance
+        ) {
+            this.contentText = contentText;
+            this.contentTitle = contentTitle;
+            this.subText = summaryText;
+            this.millisecondForDelay = millisecondForDelay;
+            this.eventId = eventId;
+            this.importance = importance;
         }
 
-        public void setTitle(String title) {
-            this.title = title;
-        }
+        private final String contentText;
+        private final String contentTitle;
+        private final String subText;
+        private final long millisecondForDelay;
+        private final int eventId;
+        private final int importance;
 
         public String getContentText() {
             return contentText;
         }
 
-        public void setContentText(String contentText) {
-            this.contentText = contentText;
-        }
-
         public String getContentTitle() {
-            return contextTitle;
+            return contentTitle;
         }
 
-        public void setContextTitle(String contextTitle) {
-            this.contextTitle = contextTitle;
+        public String getSubText() {
+            return subText;
         }
 
-        public String getSummaryText() {
-            return summaryText;
-        }
-
-        public void setSummaryText(String summaryText) {
-            this.summaryText = summaryText;
-        }
-
-        public String getBigText() {
-            return bigText;
-        }
-
-        public void setBigText(String bigText) {
-            this.bigText = bigText;
-        }
-
-        public long getSecond() {
-            return second;
-        }
-
-        public void setSecond(long second) {
-            this.second = second;
+        public long getMillisecondForDelay() {
+            return millisecondForDelay;
         }
 
         public int getEventId() {
             return eventId;
         }
 
-        public void setEventId(int eventId) {
-            this.eventId = eventId;
-        }
-
-        public String getDeepLinkUri() {
-            return deepLinkUri;
-        }
-
-        public void setDeepLinkUri(String deepLinkUri) {
-            this.deepLinkUri = deepLinkUri;
-        }
-
         public int getImportance() {
             return importance;
-        }
-
-        public void setImportance(int importance) {
-            this.importance = importance;
         }
     }
     private static final String TAG = "IGASDK";
@@ -126,8 +89,8 @@ public class IGASDK {
         igasdkApplication.deleteUserId();
     }
 
-    public static void setLocalPushNotification(LocalPushProperties lpp, boolean isAlwaysShown) {
-        igasdkApplication.setLocalPushNotification(lpp, isAlwaysShown);
+    public static void setLocalPushNotification(LocalPushProperties lpp) {
+        igasdkApplication.setLocalPushNotification(lpp);
     }
 
     public static void setIGASDKApplication(IGASDKApplication application) {

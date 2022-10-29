@@ -20,9 +20,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
-
 import androidx.core.app.NotificationCompat;
-
 import com.hig.iga_works_sdk.dto.UserInfo;
 import com.hig.iga_works_sdk.util.CustomLocationManager;
 import java.util.Map;
@@ -38,7 +36,6 @@ public class IGASDKApplication extends Application {
     public void onCreate() {
         Log.d(TAG, "onCreate: ");
         super.onCreate();
-        createNotificationChannel();
         setConnectivityManager();
         setWindowManager();
         setTelephoneManager();
@@ -156,10 +153,10 @@ public class IGASDKApplication extends Application {
         PreferenceManager.getDefaultSharedPreferences(this).edit().remove("user_id").apply();
     }
 
-    private void createNotificationChannel() {
+    private void createNotificationChannel(String id) {
         Log.d(TAG, "createNotificationChannel: ");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel = new NotificationChannel("1",
+            NotificationChannel notificationChannel = new NotificationChannel(id,
                     "녹음용 알림",
                     NotificationManager.IMPORTANCE_DEFAULT
             );
@@ -170,12 +167,13 @@ public class IGASDKApplication extends Application {
         }
     }
 
-    public void setLocalPushNotification(IGASDK.LocalPushProperties lpp, boolean isAlwaysShown) {
-        Log.d(TAG, "setNotification: second : "+lpp.getSecond());
+    public void setLocalPushNotification(IGASDK.LocalPushProperties lpp) {
+        Log.d(TAG, "setNotification: second : "+lpp.getMillisecondForDelay());
+        createNotificationChannel(String.valueOf(lpp.getEventId()));
         Notification notification = new NotificationCompat.Builder(this, String.valueOf(lpp.getEventId()))
-                .setContentTitle(lpp.getTitle())
+                .setContentTitle(lpp.getContentTitle())
                 .setContentText(lpp.getContentText())
-                .setSubText(lpp.getSummaryText())
+                .setSubText(lpp.getSubText())
                 .setPriority(lpp.getImportance())
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .build();
@@ -184,7 +182,7 @@ public class IGASDKApplication extends Application {
         Handler nHanlder = new Handler(Looper.myLooper());
         nHanlder.postDelayed(
                 () ->  nm.notify(1, notification),
-                lpp.getSecond()
+                lpp.getMillisecondForDelay()
         );
     }
 }
